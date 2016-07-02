@@ -1,6 +1,4 @@
-#"File get debug level from the config and print valid info."
-#"TODO: Use colors"
-#"TOOD: Add logging to file ability"
+from termcolor import cprint
 
 __DEBUG_LEVEL_MASK__ = 0
 
@@ -15,22 +13,27 @@ def debug_mask_set(mask):
     global __DEBUG_LEVEL_MASK__
     __DEBUG_LEVEL_MASK__ = __DEBUG_LEVEL_MASK__ | mask
 
-def debug_print_log(msg):
+def debug_print_log(log):
     if (__DEBUG_LEVEL_MASK__ & DEBUG_LEVEL_LOG > 0):
-        print "[DBG][%s]" % (msg)
+        msg = "[DBG][%s]" % (log)
+        cprint(msg, "gray")
 
-def debug_print_warn(msg):
+def debug_print_warn(wrn):
     if (__DEBUG_LEVEL_MASK__ & DEBUG_LEVEL_WARN > 0):
-        print "[WRN][%s]" % (msg)
+        msg = "[WRN][%s]" % (wrn)
+        cprint(msg, "yellow")
 
-def debug_print_err(msg):
+def debug_print_err(err):
     if (__DEBUG_LEVEL_MASK__ & DEBUG_LEVEL_ERR > 0):
-        print "[ERR][%s]" % (msg)
+        msg = "[ERR][%s]" % (err)
+        cprint(msg, "red")
 
-def debug_print_fncall(msg):
+def debug_print_fncall(foo_name):
     if (__DEBUG_LEVEL_MASK__ & DEBUG_LEVEL_FN_CALL > 0):
-        print "[FNC][%s]" % (msg)
+        msg = "[FNC][%s]" % (foo_name)
+        cprint(msg, "magenta")
 
 def debug_print_mtcall(class_name, method_name):
     if (__DEBUG_LEVEL_MASK__ & DEBUG_LEVEL_MT_CALL > 0):
-        print "[MTH][%s][%s]" % (class_name, method_name)
+        msg = "[MTH][%s][%s]" % (class_name, method_name)
+        cprint(msg, "green")
