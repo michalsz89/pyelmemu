@@ -14,7 +14,6 @@ class CanDevice(threading.Thread):
         self.lock = threading.Lock()
 
         threading.Thread.__init__(self)
-
         self.threadID = threadID
         self.name     = name
         self.setDaemon(True)

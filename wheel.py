@@ -3,22 +3,22 @@ from candevice import CanDevice
 
 import time
 
-class Engine(CanDevice):
+class Wheel(CanDevice):
     processing = True
 
     def __init__(self):
-        debug_print_mtcall("Engine", "__init__")
-        super(Engine, self).__init__(0, "EngineThread")
+        debug_print_mtcall("Wheel", "__init__")
+        super(Wheel, self).__init__(0, "WheelThread")
         self.start()
 
     def run(self):
         while True:
-            debug_print_mtcall("Engine", "run1")
+            debug_print_mtcall("Wheel", "run1")
             if (self.processing is False):
                 break
             time.sleep(1.0)
 
     def close(self):
-        debug_print_mtcall("Engine", "close")
+        debug_print_mtcall("Wheel", "close")
         self.processing = False
         self.join()
