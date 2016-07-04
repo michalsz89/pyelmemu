@@ -6,9 +6,10 @@ import time
 class Wheel(CanDevice):
     processing = True
 
-    def __init__(self):
+    def __init__(self, canbus):
         debug_print_mtcall("Wheel", "__init__")
-        super(Wheel, self).__init__(0, "WheelThread")
+        super(Wheel, self).__init__(0, "WheelThread", canbus)
+        self.canbus = canbus
         self.start()
 
     def run(self):

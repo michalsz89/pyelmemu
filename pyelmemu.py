@@ -4,42 +4,53 @@ import time
 from debug import *
 from engine import Engine
 from wheel  import Wheel
+from canbus import CanBus
 
-def initConfig():
-    debug_print_fncall(initConfig.__name__)
+def init_config():
+    debug_print_fncall("initConfig")
 
-def initEngine():
-    debug_print_fncall(initEngine.__name__)
-    engine = Engine()
+def init_canbus():
+    debug_print_fncall("initCanBus")
+    return CanBus(11, "CanBusThread")
+
+def init_engine(canbus):
+    debug_print_fncall("initEngine")
+    engine = Engine(canbus)
     return engine
 
-def initWheel():
-    debug_print_fncall(initWheel.__name__)
-    wheel = Wheel()
+def init_wheel(canbus):
+    debug_print_fncall("initWheel")
+    wheel = Wheel(canbus)
     return wheel
 
-def initDebug():
+def init_debug():
     debug_mask_set(DEBUG_LEVEL_ALL)
 
-def deinitEngine(engine):
-    debug_print_fncall(deinitEngine.__name__)
+def deinit_engine(engine):
+    debug_print_fncall("deinitEngine")
     engine.close()
 
-def deinitWheel(wheel):
-    debug_print_fncall(deinitWheel.__name__)
+def deinit_wheel(wheel):
+    debug_print_fncall("deinitWheel")
     wheel.close()
+
+def deinit_canbus(canbus):
+    debug_print_fncall("deinitCanBus")
+    canbus.close()
 
 if __name__ == '__main__':
     #Init
     #initConfig()
-    initDebug()
-    engine = initEngine()
-    wheel  = initWheel()
+    init_debug()
+    canbus = init_canbus()
+    engine = init_engine(canbus)
+    wheel  = init_wheel(canbus)
 
     #Application code
-    time.sleep(10)
+    time.sleep(2)
 
     #Deinit
-    deinitEngine(engine)
-    deinitWheel(wheel)
+    deinit_engine(engine)
+    deinit_wheel(wheel)
+    deinit_canbus(canbus)
     #deinitWhel()
