@@ -47,7 +47,7 @@ if __name__ == '__main__':
     wheel  = init_wheel(canbus)
 
     #Application code
-    time.sleep(2)
+    time.sleep(10)
 
     #Deinit
     deinit_engine(engine)

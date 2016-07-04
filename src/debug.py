@@ -16,7 +16,7 @@ def debug_mask_set(mask):
 def debug_print_log(log):
     if (__DEBUG_LEVEL_MASK__ & DEBUG_LEVEL_LOG > 0):
         msg = "[DBG][%s]" % (log)
-        cprint(msg, "gray")
+        cprint(msg, "grey")
 
 def debug_print_warn(wrn):
     if (__DEBUG_LEVEL_MASK__ & DEBUG_LEVEL_WARN > 0):
