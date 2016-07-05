@@ -12,6 +12,7 @@ class Engine(CanDevice):
         super(Engine, self).__init__(0, "EngineThread", canbus)
         self.canbus = canbus
         self.rpm = "1200"
+        self.canbus.register_receiver(self)
         self.start()
 
     def run(self):
@@ -21,6 +22,10 @@ class Engine(CanDevice):
 
             self.canbus.put_msg(self.rpm)
             debug_print_mtcall("Engine", "run")
+
+            for line in self.in_buffer:
+                debug_print_log(line)
+
             time.sleep(0.1)
 
     def close(self):

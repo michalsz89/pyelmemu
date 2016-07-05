@@ -16,6 +16,10 @@ class CanBus(threading.Thread):
     #End flag
     processing = True
 
+    #Table of registered devices
+    __receivers__ = []
+    __receivers_max_count__ = 100
+
     def __init__(self, threadID, name):
         debug_print_mtcall("CanBus", "__init__")
 
@@ -40,24 +44,25 @@ class CanBus(threading.Thread):
         self.processing = False
         self.join()
 
+    def register_receiver(self, object):
+        debug_print_mtcall("Canbus", "register_receiver");
+        self.__receivers__.append(object)
+
     def put_msg(self, msg):
         debug_print_mtcall("CanBus", "put_msg")
         self.lock.acquire(True)
         self.__buffer__.append(msg)
-        debug_print_log(msg)
-        dbg_msg2 = "buffer size %d" % (len(self.__buffer__))
-        debug_print_log(dbg_msg2)
         self.__current_size__ = self.__current_size__ + 1
+
         if (self.__current_size__ >= self.__buffer_size__):
             del self.__buffer__[0]
+            self.__current_size__ = self.__buffer_size__ - 1
+
+        for obj in self.__receivers__:
+            debug_print_log("device notification called")
+            obj.notify(msg)
 
         self.lock.release()
-
-    def get_msg(self,msg):
-        self.lock.acquire(True)
-        msg = self.__buffer__[self.__current_size__ - 1]
-        self.lock.release()
-        return msg
 
     def dump_buffer(self):
         debug_print_mtcall("CanBus", "dump_buffer")

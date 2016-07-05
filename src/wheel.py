@@ -10,6 +10,7 @@ class Wheel(CanDevice):
         debug_print_mtcall("Wheel", "__init__")
         super(Wheel, self).__init__(0, "WheelThread", canbus)
         self.canbus = canbus
+        self.canbus.register_receiver(self)
         self.start()
 
     def run(self):
@@ -17,6 +18,10 @@ class Wheel(CanDevice):
             debug_print_mtcall("Wheel", "run")
             if (self.processing is False):
                 break
+
+            for line in self.in_buffer:
+                debug_print_log(line)
+
             time.sleep(1.0)
 
     def close(self):
