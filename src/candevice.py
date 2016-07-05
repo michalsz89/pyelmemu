@@ -30,7 +30,7 @@ class CanDevice(threading.Thread):
 
     def notify(self, msg):
         debug_print_mtcall("CanDevice", "notify")
-        debug_print_log(msg)
+        debug_print_log("Class:CanDevice", msg)
 
         self.in_buffer.append(msg)
         self.in_buffer_cnt = self.in_buffer_cnt + 1;

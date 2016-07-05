@@ -13,27 +13,47 @@ def debug_mask_set(mask):
     global __DEBUG_LEVEL_MASK__
     __DEBUG_LEVEL_MASK__ = __DEBUG_LEVEL_MASK__ | mask
 
-def debug_print_log(log):
+def debug_print_log(*log):
     if (__DEBUG_LEVEL_MASK__ & DEBUG_LEVEL_LOG > 0):
-        msg = "[DBG][%s]" % (log)
+        msg = "[DBG]"
+        for arg in log:
+            targ = "[%s]" % arg
+            msg += targ
+
         cprint(msg, "grey")
 
-def debug_print_warn(wrn):
+def debug_print_warn(*wrn):
     if (__DEBUG_LEVEL_MASK__ & DEBUG_LEVEL_WARN > 0):
-        msg = "[WRN][%s]" % (wrn)
+        msg = "[WRN]"
+        for arg in wrn:
+            targ = "[%s]" % arg
+            msg += targ
+
         cprint(msg, "yellow")
 
-def debug_print_err(err):
+def debug_print_err(*err):
     if (__DEBUG_LEVEL_MASK__ & DEBUG_LEVEL_ERR > 0):
-        msg = "[ERR][%s]" % (err)
+        msg = "[ERR]"
+        for arg in err:
+            targ = "[%s]" % arg
+            msg += targ
+
         cprint(msg, "red")
 
-def debug_print_fncall(foo_name):
+def debug_print_fncall(*foo):
     if (__DEBUG_LEVEL_MASK__ & DEBUG_LEVEL_FN_CALL > 0):
-        msg = "[FNC][%s]" % (foo_name)
+        msg = "[FNC]"
+        for arg in foo:
+            targ = "[%s]" % arg
+            msg += targ
+
         cprint(msg, "magenta")
 
-def debug_print_mtcall(class_name, method_name):
+def debug_print_mtcall(class_name, method_name, *mt):
     if (__DEBUG_LEVEL_MASK__ & DEBUG_LEVEL_MT_CALL > 0):
         msg = "[MTH][%s][%s]" % (class_name, method_name)
+        for arg in mt:
+            targ = "[%s]" % arg
+            msg += targ
+
         cprint(msg, "green")

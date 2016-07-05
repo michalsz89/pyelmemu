@@ -40,7 +40,6 @@ def deinit_canbus(canbus):
 
 if __name__ == '__main__':
     #Init
-    #initConfig()
     init_debug()
     canbus = init_canbus()
     engine = init_engine(canbus)
@@ -53,4 +52,3 @@ if __name__ == '__main__':
     deinit_engine(engine)
     deinit_wheel(wheel)
     deinit_canbus(canbus)
-    #deinitWhel()

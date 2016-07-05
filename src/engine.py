@@ -24,9 +24,9 @@ class Engine(CanDevice):
             debug_print_mtcall("Engine", "run")
 
             for line in self.in_buffer:
-                debug_print_log(line)
+                debug_print_log("Class:Engine", "Method:Run", "Buffer", line)
 
-            time.sleep(0.1)
+            time.sleep(1.0)
 
     def close(self):
         debug_print_mtcall("Engine", "close")

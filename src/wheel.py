@@ -20,7 +20,7 @@ class Wheel(CanDevice):
                 break
 
             for line in self.in_buffer:
-                debug_print_log(line)
+                debug_print_log("Class:Wheel", line)
 
             time.sleep(1.0)
 
