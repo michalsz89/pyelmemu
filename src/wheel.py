@@ -5,6 +5,9 @@ import time
 
 class Wheel(CanDevice):
     processing = True
+    canbus     = None
+
+    dev_addr   = 2
 
     def __init__(self, canbus):
         debug_print_mtcall("Wheel", "__init__")

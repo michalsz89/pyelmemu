@@ -20,6 +20,7 @@ def init_engine(canbus):
 
 def init_wheel(canbus):
     debug_print_fncall("initWheel")
+    debug_add_filter("Wheel")
     wheel = Wheel(canbus)
     return wheel
 

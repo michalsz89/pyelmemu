@@ -1,6 +1,7 @@
 import threading
-from debug import *
 import canbus
+
+from debug import *
 
 class CanDevice(threading.Thread):
     "TODO: add description of this class"

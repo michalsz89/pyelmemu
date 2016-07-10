@@ -59,7 +59,6 @@ class CanBus(threading.Thread):
             self.__current_size__ = self.__buffer_size__ - 1
 
         for obj in self.__receivers__:
-            debug_print_log("Class:CanBus", "device notification called")
             obj.notify(msg)
 
         self.lock.release()
