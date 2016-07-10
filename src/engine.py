@@ -26,7 +26,6 @@ class Engine(CanDevice):
                 break
 
             debug_print_mtcall("Engine", "run")
-            self.__send_data__()
 
             #for line in self.in_buffer:
             #    debug_print_log("Class:Engine", "Method:Run", "Buffer", line)
@@ -37,9 +36,3 @@ class Engine(CanDevice):
         debug_print_mtcall("Engine", "close")
         self.processing = False
         self.join()
-
-    def __send_data__(self):
-        debug_print_mtcall("Engine", "__send_data")
-        self.canbus.put_msg(self.__rpm__)
-        self.canbus.put_msg(self.__temp__)
-        self.canbus.put_msg(self.__bost__)

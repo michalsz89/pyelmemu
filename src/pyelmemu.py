@@ -20,12 +20,12 @@ def init_engine(canbus):
 
 def init_wheel(canbus):
     debug_print_fncall("initWheel")
-    debug_add_filter("Wheel")
     wheel = Wheel(canbus)
     return wheel
 
 def init_debug():
     debug_mask_set(DEBUG_LEVEL_ALL)
+    debug_add_filter("Wheel")
 
 def deinit_engine(engine):
     debug_print_fncall("deinitEngine")
@@ -45,6 +45,13 @@ if __name__ == '__main__':
     canbus = init_canbus()
     engine = init_engine(canbus)
     wheel  = init_wheel(canbus)
+
+    wheel.key_press(1)
+    wheel.key_press(2)
+    wheel.key_press(3)
+    wheel.key_press(4)
+    wheel.key_press(5)
+    wheel.key_press(6)
 
     #Application code
     time.sleep(10)
