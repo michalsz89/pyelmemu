@@ -26,9 +26,8 @@ class Engine(CanDevice):
                 break
 
             debug_print_mtcall("Engine", "run")
-
-            #for line in self.in_buffer:
-            #    debug_print_log("Class:Engine", "Method:Run", "Buffer", line)
+            for line in self.in_buffer:
+                debug_print_log("Class:Engine", "Method:Run", "Buffer", line)
 
             time.sleep(1.0)
 
