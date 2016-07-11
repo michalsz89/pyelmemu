@@ -1,6 +1,8 @@
-from debug     import *
-from config    import *
-from candevice import CanDevice
+from debug        import *
+from config       import *
+
+from candevice    import CanDevice
+from rfcommserver import RfcommServer
 
 import time
 
@@ -12,6 +14,10 @@ class Elm(CanDevice):
     def __init__(self, canbus):
         debug_print_mtcall("Elm", "__init__")
         super(Elm, self).__init__(5, "ElmThread", canbus)
+
+        #rfcommserver
+        self.rfcommserver = RfcommServer(6, "RfcommThread")
+
         self.canbus = canbus
         self.canbus.register_receiver(self)
         self.start()
@@ -29,5 +35,8 @@ class Elm(CanDevice):
 
     def close(self):
         debug_print_mtcall("Elm", "close")
+
+        self.rfcommserver.close()
+
         self.processing = False
         self.join()
