@@ -1,4 +1,5 @@
 from debug     import *
+from config    import *
 from candevice import CanDevice
 from can       import Message
 
@@ -31,7 +32,7 @@ class Wheel(CanDevice):
 
             #sending data
             self.send()
-            time.sleep(1.0)
+            time.sleep(wheel_timeout)
 
     def close(self):
         debug_print_mtcall("Wheel", "close")

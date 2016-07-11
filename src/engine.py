@@ -1,4 +1,5 @@
 from debug     import *
+from config    import *
 from candevice import CanDevice
 
 import time
@@ -25,11 +26,7 @@ class Engine(CanDevice):
             if (self.processing is False):
                 break
 
-            debug_print_mtcall("Engine", "run")
-            for line in self.in_buffer:
-                debug_print_log("Class:Engine", "Method:Run", "Buffer", line)
-
-            time.sleep(1.0)
+            time.sleep(engine_timeout)
 
     def close(self):
         debug_print_mtcall("Engine", "close")

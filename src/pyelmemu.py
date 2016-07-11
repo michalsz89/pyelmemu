@@ -6,6 +6,7 @@ from debug import *
 from engine import Engine
 from wheel  import Wheel
 from canbus import CanBus
+from elm    import Elm
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (QWidget, QApplication, QPushButton, QGridLayout)
@@ -22,20 +23,17 @@ class Application(QWidget):
         self.init_canbus()
         self.init_engine()
         self.init_wheel()
+        self.init_elm()
         self.init_ui()
 
     def deinit(self):
+        self.deinit_elm()
         self.deinit_engine()
         self.deinit_wheel()
         self.deinit_canbus()
 
     def init_ui(self):
         grid = QGridLayout()
-        #for i in range(0, 10):
-        #    btn_title = "Key_%d" % i
-        #    button = QPushButton(btn_title)
-        #    button.clicked.connect(lambda:self.btn_clicked(i))
-        #    gridLy.addWidget(button)
 
         btn0 = QPushButton("key_0")
         btn0.clicked.connect(lambda:self.btn_clicked(0))
@@ -63,35 +61,42 @@ class Application(QWidget):
         self.wheel.key_press(i)
 
     def init_config(self):
-        debug_print_fncall("initConfig")
+        debug_print_mtcall("Applicaion", "init_config")
 
     def init_canbus(self):
-        debug_print_fncall("initCanBus")
+        debug_print_mtcall("Application", "init_canbus")
         self.canbus = CanBus(11, "CanBusThread")
 
     def init_engine(self):
-        debug_print_fncall("initEngine")
+        debug_print_mtcall("Application", "init_engine")
         self.engine = Engine(self.canbus)
 
     def init_wheel(self):
-        debug_print_fncall("initWheel")
+        debug_print_mtcall("Application", "init_wheel")
         self.wheel = Wheel(self.canbus)
 
+    def init_elm(self):
+        debug_print_mtcall("Application", "init_elm")
+        self.elm = Elm(self.canbus)
+
     def init_debug(self):
-        debug_mask_set(DEBUG_LEVEL_LOG)
-        debug_mask_set(DEBUG_LEVEL_FN_CALL)
+        debug_mask_set(DEBUG_LEVEL_ALL)
         debug_add_filter("Wheel")
 
     def deinit_engine(self):
-        debug_print_fncall("deinitEngine")
+        debug_print_mtcall("Application", "deinit_engine")
         self.engine.close()
 
     def deinit_wheel(self):
-        debug_print_fncall("deinitWheel")
+        debug_print_mtcall("Application", "deinit_wheel")
         self.wheel.close()
 
+    def deinit_elm(self):
+        debug_print_mtcall("Application", "deinit_elm")
+        self.elm.close()
+
     def deinit_canbus(self):
-        debug_print_fncall("deinitCanBus")
+        debug_print_mtcall("Application", "deinit_canbus")
         self.canbus.close()
 
 if __name__ == '__main__':
