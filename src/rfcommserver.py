@@ -14,6 +14,8 @@ class RfcommServer(threading.Thread):
     server_errors = []
     msg_queue = []
 
+    processing = True
+
     def __init__(self, threadID, name):
         debug_print_mtcall("RfcommServer", "__init__")
         threading.Thread.__init__(self)
@@ -44,7 +46,9 @@ class RfcommServer(threading.Thread):
         #self.lock.release()
 
     def close(self):
-        debug_print_mtcall("RfcommServer", "close")
+        debug_print_log("RfcommServer", "close")
+        self.processing = False
+
         if self.client_sock is not None:
             self.client_sock.close()
         if self.serv_sock is not None:
@@ -52,7 +56,6 @@ class RfcommServer(threading.Thread):
 
     def job(self, threadName):
         debug_print_mtcall("RfcommServer", "job")
-        run = True
         currentThread = threading.currentThread()
         debug_print_log("RfCommServer",  "Server starting...")
 
@@ -78,11 +81,10 @@ class RfcommServer(threading.Thread):
 
         self.client_sock.settimeout(bt_server_timeout)
         #Data reading loop
-        while run:
+        while self.processing:
             try:
                 cmd = str()
                 if len(currentThread.msg_queue) > 0:
-                    debug_print_log("SENDING")
                     cmd = currentThread.msg_queue[0];
                     del currentThread.msg_queue[0]
                     cmd = cmd + '\r'
@@ -95,7 +97,5 @@ class RfcommServer(threading.Thread):
             except IOError:
                 pass
 
-        debug_print_log("RfCommServer", "Disconnecting...")
         client_sock.close()
         server_sock.close()
-        debug_print_log("RfcommServer", "Finished...")
