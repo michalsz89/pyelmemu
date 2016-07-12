@@ -4,8 +4,10 @@
 import bluetooth
 import threading
 import sys
+import time
 
 from debug import *
+from config import bt_server_timeout
 
 class RfcommServer(threading.Thread):
     server_status = str()
@@ -85,6 +87,8 @@ class RfcommServer(threading.Thread):
                     del currentThread.msg_queue[0]
                     cmd = cmd + '\r'
                     client_sock.send(cmd)
+                time.sleep(bt_server_timeout)
+
         except IOError:
             pass
 

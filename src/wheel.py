@@ -44,9 +44,10 @@ class Wheel(CanDevice):
         msg.is_remote_frame = False
         msg.is_error_frame  = False
         msg.extended_id     = False
-        msg.arbitration_id  = self.__dev_addr__
-        msg.data = bytearray([key_num])
+        msg.data = bytearray([key_num, 0])
 
         str_msg = "%s" % msg
+
+
         self.out_buffer.append(str_msg)
         self.out_buffer_cnt = self.out_buffer_cnt + 1
