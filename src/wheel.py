@@ -8,7 +8,7 @@ import time
 class Wheel(CanDevice):
     __processing__ = True
     __canbus__     = None
-    __dev_addr__   = 8
+    __dev_addr__   = 156
 
     #out buffer
     __out_buffer__ = []
@@ -40,14 +40,10 @@ class Wheel(CanDevice):
         self.join()
 
     def key_press(self, key_num):
-        msg = Message()
-        msg.is_remote_frame = False
-        msg.is_error_frame  = False
-        msg.extended_id     = False
-        msg.data = bytearray([key_num, 0])
+        msg = Message(timestamp = time.time(), extended_id = False, arbitration_id = self.__dev_addr__,
+                data = bytearray([0, key_num]))
 
         str_msg = "%s" % msg
-
 
         self.out_buffer.append(str_msg)
         self.out_buffer_cnt = self.out_buffer_cnt + 1

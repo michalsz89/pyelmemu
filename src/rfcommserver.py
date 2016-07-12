@@ -76,10 +76,10 @@ class RfcommServer(threading.Thread):
         self.client_sock = client_sock
         debug_print_log("RfCommServer", "connected", str(addr))
 
+        self.client_sock.settimeout(bt_server_timeout)
         #Data reading loop
-        try:
-            while run:
-                #currentThread.lock.acquire(True)
+        while run:
+            try:
                 cmd = str()
                 if len(currentThread.msg_queue) > 0:
                     debug_print_log("SENDING")
@@ -87,10 +87,13 @@ class RfcommServer(threading.Thread):
                     del currentThread.msg_queue[0]
                     cmd = cmd + '\r'
                     client_sock.send(cmd)
-                time.sleep(bt_server_timeout)
 
-        except IOError:
-            pass
+                data = client_sock.recv(1024)
+                if len(data) > 0:
+                    debug_print_log("data received")
+
+            except IOError:
+                pass
 
         debug_print_log("RfCommServer", "Disconnecting...")
         client_sock.close()
