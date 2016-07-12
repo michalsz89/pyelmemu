@@ -27,8 +27,11 @@ class Elm(CanDevice):
             if (self.processing is False):
                 break
 
-            for line in self.in_buffer:
-                debug_print_log("ELM", line)
+            if (len(self.in_buffer) > 0):
+                msg = self.in_buffer[self.in_buffer_cnt - 1]
+                del self.in_buffer[self.in_buffer_cnt - 1]
+                self.in_buffer_cnt = self.in_buffer_cnt - 1
+                self.rfcommserver.send(msg)
 
             debug_print_mtcall("Elm", "run")
             time.sleep(elm_timeout)

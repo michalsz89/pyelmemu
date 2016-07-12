@@ -80,7 +80,7 @@ class Application(QWidget):
         self.elm = Elm(self.canbus)
 
     def init_debug(self):
-        debug_mask_set(DEBUG_LEVEL_ALL)
+        debug_mask_set(DEBUG_LEVEL_LOG)
         debug_add_filter("Wheel")
 
     def deinit_engine(self):

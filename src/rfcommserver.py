@@ -29,7 +29,7 @@ class RfcommServer(threading.Thread):
         debug_print_mtcall("RfcommServer", "run")
         self.job(self.name)
 
-    def set_command(self, command):
+    def send(self, command):
         debug_print_mtcall("RfcommServer", "set_command")
         #self.lock.acquire(True)
         self.msg_queue.append(command)
@@ -64,7 +64,7 @@ class RfcommServer(threading.Thread):
         port = server_sock.getsockname()[1]
         uuid = "94f39d29-7d6d-437d-973b-fba39e49d4ee"
 
-        bluetooth.advertise_service(server_sock, "Sample Server",
+        bluetooth.advertise_service(server_sock, "BTserver",
                 service_id = uuid,
                 service_classes = [uuid, bluetooth.SERIAL_PORT_CLASS],
                 profiles = [bluetooth.SERIAL_PORT_PROFILE],)
@@ -72,28 +72,23 @@ class RfcommServer(threading.Thread):
         debug_print_log("RfCommServer", "Waiting for devices...")
         client_sock,addr = server_sock.accept()
         self.client_sock = client_sock
-        debug_print_log("RfCommServer", "connected", addr)
+        debug_print_log("RfCommServer", "connected", str(addr))
 
         #Data reading loop
         try:
             while run:
-                #Get command from server.
                 #currentThread.lock.acquire(True)
                 cmd = str()
-
                 if len(currentThread.msg_queue) > 0:
+                    debug_print_log("SENDING")
                     cmd = currentThread.msg_queue[0];
                     del currentThread.msg_queue[0]
-                #currentThread.lock.release()
-
-                data = client_sock.recv(1024)
-                if len(data) == 0: break
-                debug_print_log("RfcommServer", data)
-                client_sock.send("Data Received\r")
+                    cmd = cmd + '\r'
+                    client_sock.send(cmd)
         except IOError:
             pass
 
-        debut_print_log("RfCommServer", "Disconnecting...")
+        debug_print_log("RfCommServer", "Disconnecting...")
         client_sock.close()
         server_sock.close()
         debug_print_log("RfcommServer", "Finished...")

@@ -8,7 +8,7 @@ import time
 class Wheel(CanDevice):
     __processing__ = True
     __canbus__     = None
-    __dev_addr__   = 2
+    __dev_addr__   = 8
 
     #out buffer
     __out_buffer__ = []
