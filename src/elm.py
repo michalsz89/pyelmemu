@@ -31,7 +31,15 @@ class Elm(CanDevice):
                 msg = self.in_buffer[self.in_buffer_cnt - 1]
                 del self.in_buffer[self.in_buffer_cnt - 1]
                 self.in_buffer_cnt = self.in_buffer_cnt - 1
-                self.rfcommserver.send(msg)
+
+                msg = msg.split()
+                del msg[0]
+                del msg[1]
+                parsed_msg = str()
+                for w in msg:
+                    parsed_msg = parsed_msg + w
+
+                self.rfcommserver.send(parsed_msg)
 
             debug_print_mtcall("Elm", "run")
             time.sleep(elm_timeout)

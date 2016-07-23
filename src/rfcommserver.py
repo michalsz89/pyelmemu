@@ -28,7 +28,6 @@ class RfcommServer(threading.Thread):
         self.setDaemon(True)
         self.start()
 
-
     def run(self):
         debug_print_mtcall("RfcommServer", "run")
         self.job(self.name)
