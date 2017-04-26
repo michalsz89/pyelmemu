@@ -1,4 +1,6 @@
-#from candevice import CanDevice
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import time
 import sys
 
@@ -10,7 +12,6 @@ from elm    import Elm
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (QWidget, QApplication, QPushButton, QGridLayout)
-
 
 class Application(QWidget):
     def __init__(self):
@@ -31,6 +32,7 @@ class Application(QWidget):
         self.deinit_engine()
         self.deinit_wheel()
         self.deinit_canbus()
+        self.close();
 
     def init_ui(self):
         grid = QGridLayout()
@@ -50,6 +52,10 @@ class Application(QWidget):
         btn3 = QPushButton("key_3")
         btn3.clicked.connect(lambda:self.btn_clicked(3))
         grid.addWidget(btn3)
+
+        btnExit = QPushButton("Exit")
+        btnExit.clicked.connect(self.deinit);
+        grid.addWidget(btnExit)
 
         self.setLayout(grid)
         self.setGeometry(0, 0, 500, 500)

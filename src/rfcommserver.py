@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 import bluetooth
@@ -66,7 +65,7 @@ class RfcommServer(threading.Thread):
         self.serv_sock = server_sock
 
         port = server_sock.getsockname()[1]
-        uuid = "94f39d29-7d6d-437d-973b-fba39e49d4ee"
+        uuid = "00001101-0000-1000-8000-00805F9B34FB"
 
         bluetooth.advertise_service(server_sock, "BTserver",
                 service_id = uuid,
